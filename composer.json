@@ -101,11 +101,5 @@
 		],
 		"serve" : "php -S 0.0.0.0:8080 -t public",
 		"test" : "phpunit"
-	},
-	"repositories" : [{
-			"type" : "git",
-			"url" : "https://github.com/comcduarte/com-mvc-skeleton",
-			"name" : "comcduarte"
-		}
-	]
+	}
 }
