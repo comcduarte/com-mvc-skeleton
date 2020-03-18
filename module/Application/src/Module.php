@@ -12,6 +12,9 @@ namespace Application;
 
 class Module
 {
+    const TITLE = "City of Middletown WebApp";
+    const VERSION = "v0.0.0";
+    
     public function getConfig() : array
     {
         return include __DIR__ . '/../config/module.config.php';
