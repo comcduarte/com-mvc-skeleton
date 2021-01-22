@@ -29,7 +29,7 @@ $ composer run --timeout 0 serve
 
 This will start the cli-server on port 8080, and bind it to all network
 interfaces. You can then visit the site at http://localhost:8080/
-- which will bring up Zend Framework welcome page.
+- which will bring up Laminas MVC Skeleton welcome page.
 
 **Note:** The built-in CLI server is *for development only*.
 
@@ -117,7 +117,10 @@ For vagrant documentation, please refer to [vagrantup.com](https://www.vagrantup
 
 This skeleton provides a `docker-compose.yml` for use with
 [docker-compose](https://docs.docker.com/compose/); it
-uses the `Dockerfile` provided as its base. Build and start the image using:
+uses the provided `Dockerfile` to build a docker image 
+for the `laminas` container created with `docker-compose`.
+
+Build and start the image and container using:
 
 ```bash
 $ docker-compose up -d --build
@@ -125,12 +128,29 @@ $ docker-compose up -d --build
 
 At this point, you can visit http://localhost:8080 to see the site running.
 
-You can also run composer from the image. The container environment is named
-"laminas", so you will pass that value to `docker-compose run`:
+You can also run commands such as `composer` in the container.  The container 
+environment is named "laminas" so you will pass that value to 
+`docker-compose run`:
 
 ```bash
 $ docker-compose run laminas composer install
 ```
+
+Some composer packages optionally use additional PHP extensions.  
+The Dockerfile contains several commented-out commands 
+which enable some of the more popular php extensions. 
+For example, to install `pdo-pgsql` support for `laminas/laminas-db`
+uncomment the lines:
+
+```sh
+# RUN apt-get install --yes libpq-dev \
+#     && docker-php-ext-install pdo_pgsql
+```
+
+then re-run the `docker-compose up -d --build` line as above.
+
+> You may also want to combine the various `apt-get` and `docker-php-ext-*`
+> statements later to reduce the number of layers created by your image.
 
 ## Web server setup
 
@@ -208,7 +228,7 @@ Additionally, it comes with some basic tests for the shipped
 If you want to add these QA tools, execute the following:
 
 ```bash
-$ composer require --dev phpunit/phpunit squizlabs/php_codesniffer zendframework/zend-test
+$ composer require --dev phpunit/phpunit squizlabs/php_codesniffer laminas/laminas-test
 ```
 
 We provide aliases for each of these tools in the Composer configuration:
